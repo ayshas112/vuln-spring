@@ -12,11 +12,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  NextGen-Static-Analysis:
+  preZero:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Download ShiftLeft cli
+    - name: Download Qwiet cli
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
     - name: Extract branch name
@@ -30,8 +30,9 @@ jobs:
       run: |
         #####
         # Run Qwiet analysis
-        if [ -e "/github/workspace/cpg_out" ]; then
-          for i in `ls /github/workspace/cpg_out/*.manifest.json`; do
+        if [ -e "${GITHUB_WORKSPACE}/cpg_out" ]; then
+          ls -l ${GITHUB_WORKSPACE}/cpg_out
+          for i in `ls ${GITHUB_WORKSPACE}/cpg_out/*.manifest.json`; do
             cpg=$(jq -r ".cpg" $i)
             sbom=$(jq -r ".sbom" $i)
             language=$(jq -r ".language" $i)
