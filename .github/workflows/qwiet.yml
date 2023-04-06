@@ -30,8 +30,8 @@ jobs:
           echo ${GITHUB_WORKSPACE}
           ls -l ${GITHUB_WORKSPACE}/cpg_out
           for i in `ls ${GITHUB_WORKSPACE}/cpg_out/*.manifest.json`; do
-            cpg=$(jq -r ".cpg" $i | sed -i 's|/github/workspace|${GITHUB_WORKSPACE}/g')
-            sbom=$(jq -r ".sbom" $i | sed -i 's|/github/workspace|${GITHUB_WORKSPACE}/g')
+            cpg=$(jq -r ".cpg" $i)
+            sbom=$(jq -r ".sbom" $i)
             language=$(jq -r ".language" $i)
             ${GITHUB_WORKSPACE}/sl analyze --tag app.group=$(basename $(pwd)) --app $(basename $(pwd))-$language --$language --cpgupload $cpg --bomupload $sbom
           done
