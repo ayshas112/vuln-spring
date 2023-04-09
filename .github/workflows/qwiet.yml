@@ -22,6 +22,9 @@ jobs:
     - uses: AppThreat/cpggen-action@main
       with:
         out_dir: "/github/workspace/cpg_out"
+        export_out_dir: "/github/workspace/cpg_export"
+      env:
+        CPG_EXPORT: true
     - name: Analyze
       run: |
         #####
@@ -49,3 +52,9 @@ jobs:
       with:
         name: cpg
         path: cpg_out
+    - name: Upload graphs
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: cpg_graphs
+        path: cpg_export
+        
