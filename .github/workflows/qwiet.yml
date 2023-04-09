@@ -19,30 +19,22 @@ jobs:
     - name: Download Qwiet cli
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
-        sudo apt install tree -y
     - uses: AppThreat/cpggen-action@main
       with:
         out_dir: "/github/workspace/cpg_out"
         export_out_dir: "/github/workspace/cpg_export"
       env:
         CPG_EXPORT: "true"
-        AT_DEBUG_MODE: "debug"
     - name: Analyze
       run: |
         #####
         # Run Qwiet analysis
-        tree cpg_out
-        tree cpg_export
-        if [ -e "${GITHUB_WORKSPACE}/cpg_out" ]; then
-          for i in `ls ${GITHUB_WORKSPACE}/cpg_out/*.manifest.json`; do
-            cpg=$(jq -r ".cpg" $i)
-            sbom=$(jq -r ".sbom" $i)
-            language=$(jq -r ".language" $i)
-            ${GITHUB_WORKSPACE}/sl analyze --tag app.group=$(basename $(pwd)) --app $(basename $(pwd))-$language --$language --cpgupload --bomupload $sbom $cpg
-          done
-        else
-          echo "CPG was not generated successfully"
-        fi
+        for i in `ls ${GITHUB_WORKSPACE}/cpg_out/*.manifest.json`; do
+          cpg=$(jq -r ".cpg" $i)
+          sbom=$(jq -r ".sbom" $i)
+          language=$(jq -r ".language" $i)
+          ${GITHUB_WORKSPACE}/sl analyze --tag app.group=$(basename $(pwd)) --app $(basename $(pwd))-$language --$language --cpgupload --bomupload $sbom $cpg
+        done
         #####
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
