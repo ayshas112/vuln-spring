@@ -26,6 +26,7 @@ jobs:
         export_out_dir: "/github/workspace/cpg_export"
       env:
         CPG_EXPORT: "true"
+        AT_DEBUG_MODE: "debug"
     - name: Analyze
       run: |
         #####
