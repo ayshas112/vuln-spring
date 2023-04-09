@@ -24,14 +24,12 @@ jobs:
         out_dir: "/github/workspace/cpg_out"
         export_out_dir: "/github/workspace/cpg_export"
       env:
-        CPG_EXPORT: true
+        CPG_EXPORT: "true"
     - name: Analyze
       run: |
         #####
         # Run Qwiet analysis
         if [ -e "${GITHUB_WORKSPACE}/cpg_out" ]; then
-          echo ${GITHUB_WORKSPACE}
-          ls -l ${GITHUB_WORKSPACE}/cpg_out
           for i in `ls ${GITHUB_WORKSPACE}/cpg_out/*.manifest.json`; do
             cpg=$(jq -r ".cpg" $i)
             sbom=$(jq -r ".sbom" $i)
@@ -57,4 +55,3 @@ jobs:
       with:
         name: cpg_graphs
         path: cpg_export
-        
