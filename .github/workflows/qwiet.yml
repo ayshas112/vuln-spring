@@ -20,6 +20,7 @@ jobs:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CPG_EXPORT: true
+        AT_DEBUG_MODE: debug
     - name: Upload cpg
       uses: actions/upload-artifact@v1.0.0
       with:
