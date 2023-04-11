@@ -19,15 +19,8 @@ jobs:
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CPG_EXPORT: true
-        AT_DEBUG_MODE: debug
     - name: Upload cpg
       uses: actions/upload-artifact@v1.0.0
       with:
         name: cpg
         path: cpg_out
-    - name: Upload graphs
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: cpg_graphs
-        path: cpg_export
