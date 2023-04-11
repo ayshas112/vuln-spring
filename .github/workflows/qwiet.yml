@@ -19,8 +19,3 @@ jobs:
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Upload cpg
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: cpg
-        path: cpg_out
